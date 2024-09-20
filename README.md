@@ -1,4 +1,4 @@
-# DIGIT2107
+# Eventify
 **Events Simplified!**
 
 ## Table of Contents
