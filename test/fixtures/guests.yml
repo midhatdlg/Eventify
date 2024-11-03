@@ -1,11 +1,30 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  rsvp_status: MyString
+john_doe:
+  name: "John Doe"
+  rsvp_status: "Accepted"
   event: one
 
-two:
-  name: MyString
-  rsvp_status: MyString
+jane_smith:
+  name: "Jane Smith"
+  rsvp_status: "Declined"
+  event: two
+
+michael_brown:
+  name: "Michael Brown"
+  rsvp_status: "Pending"
+  event: one
+
+emily_white:
+  name: "Emily White"
+  rsvp_status: "Accepted"
+  event: two
+
+alex_jones:
+  name: "Alex Jones"
+  rsvp_status: "Accepted"
+  event: one
+
+lisa_wang:
+  name: "Lisa Wang"
+  rsvp_status: "Declined"
   event: two

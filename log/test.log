@@ -1,0 +1,521 @@
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "budgets"[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "budgets" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "amount" decimal, "description" text, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_budgets_on_event_id" ON "budgets" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "events"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "events" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "date" datetime(6), "location" varchar, "description" text, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "gift_registries"[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "gift_registries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "item_name" varchar, "price" decimal, "link" varchar, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_gift_registries_on_event_id" ON "gift_registries" ("event_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "guests"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "guests" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "rsvp_status" varchar, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE INDEX "index_guests_on_event_id" ON "guests" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "itineraries"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "itineraries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "time" datetime(6), "description" text, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_itineraries_on_event_id" ON "itineraries" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "notifications"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "notifications" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "message" text, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_notifications_on_event_id" ON "notifications" ("event_id")[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.4ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (1.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "abudgets" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "amount" decimal, "description" text, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_abudgets_on_event_id" ON "abudgets" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "abudgets" ("id","amount","description","event_id","created_at","updated_at")
+                     SELECT "id","amount","description","event_id","created_at","updated_at" FROM "budgets"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "budgets"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "budgets" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "amount" decimal, "description" text, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_c812fd6096"
+FOREIGN KEY ("event_id")
+  REFERENCES "events" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_budgets_on_event_id" ON "budgets" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "budgets" ("id","amount","description","event_id","created_at","updated_at")
+                     SELECT "id","amount","description","event_id","created_at","updated_at" FROM "abudgets"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "abudgets"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TEMPORARY TABLE "agift_registries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "item_name" varchar, "price" decimal, "link" varchar, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_agift_registries_on_event_id" ON "agift_registries" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "agift_registries" ("id","item_name","price","link","event_id","created_at","updated_at")
+                     SELECT "id","item_name","price","link","event_id","created_at","updated_at" FROM "gift_registries"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "gift_registries"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "gift_registries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "item_name" varchar, "price" decimal, "link" varchar, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_307e014658"
+FOREIGN KEY ("event_id")
+  REFERENCES "events" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_gift_registries_on_event_id" ON "gift_registries" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "gift_registries" ("id","item_name","price","link","event_id","created_at","updated_at")
+                     SELECT "id","item_name","price","link","event_id","created_at","updated_at" FROM "agift_registries"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "agift_registries"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aguests" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "rsvp_status" varchar, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_aguests_on_event_id" ON "aguests" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "aguests" ("id","name","rsvp_status","event_id","created_at","updated_at")
+                     SELECT "id","name","rsvp_status","event_id","created_at","updated_at" FROM "guests"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "guests"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "guests" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "rsvp_status" varchar, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_64ecc46b69"
+FOREIGN KEY ("event_id")
+  REFERENCES "events" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_guests_on_event_id" ON "guests" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "guests" ("id","name","rsvp_status","event_id","created_at","updated_at")
+                     SELECT "id","name","rsvp_status","event_id","created_at","updated_at" FROM "aguests"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "aguests"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aitineraries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "time" datetime(6), "description" text, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_aitineraries_on_event_id" ON "aitineraries" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "aitineraries" ("id","time","description","event_id","created_at","updated_at")
+                     SELECT "id","time","description","event_id","created_at","updated_at" FROM "itineraries"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "itineraries"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "itineraries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "time" datetime(6), "description" text, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_7dda9619a9"
+FOREIGN KEY ("event_id")
+  REFERENCES "events" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_itineraries_on_event_id" ON "itineraries" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "itineraries" ("id","time","description","event_id","created_at","updated_at")
+                     SELECT "id","time","description","event_id","created_at","updated_at" FROM "aitineraries"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "aitineraries"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TEMPORARY TABLE "anotifications" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "message" text, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_anotifications_on_event_id" ON "anotifications" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "anotifications" ("id","message","event_id","created_at","updated_at")
+                     SELECT "id","message","event_id","created_at","updated_at" FROM "notifications"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "notifications"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "notifications" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "message" text, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_78f4b5a537"
+FOREIGN KEY ("event_id")
+  REFERENCES "events" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_notifications_on_event_id" ON "notifications" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "notifications" ("id","message","event_id","created_at","updated_at")
+                     SELECT "id","message","event_id","created_at","updated_at" FROM "anotifications"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "anotifications"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20241031162326)[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20241031162319),
+(20241031162308),
+(20241031162302),
+(20241031162254),
+(20241031162218);[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.0ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'test', '2024-11-02 03:37:55.678387', '2024-11-02 03:37:55.678388') RETURNING "key"[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.0ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', 'd87d194f86a7dd8ac098e9d813be3aadc6a71cd1', '2024-11-02 03:37:55.682137', '2024-11-02 03:37:55.682137') RETURNING "key"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[35m (1.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "budgets"[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "budgets" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "amount" decimal, "description" text, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_budgets_on_event_id" ON "budgets" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "events"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "events" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "date" datetime(6), "location" varchar, "description" text, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "name" varchar)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "gift_registries"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "gift_registries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "item_name" varchar, "price" decimal, "link" varchar, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_gift_registries_on_event_id" ON "gift_registries" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "guests"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "guests" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "rsvp_status" varchar, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_guests_on_event_id" ON "guests" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "itineraries"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "itineraries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "time" datetime(6), "description" text, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_itineraries_on_event_id" ON "itineraries" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "notifications"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "notifications" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "message" text, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_notifications_on_event_id" ON "notifications" ("event_id")[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "abudgets" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "amount" decimal, "description" text, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_abudgets_on_event_id" ON "abudgets" ("event_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "abudgets" ("id","amount","description","event_id","created_at","updated_at")
+                     SELECT "id","amount","description","event_id","created_at","updated_at" FROM "budgets"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "budgets"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "budgets" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "amount" decimal, "description" text, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_c812fd6096"
+FOREIGN KEY ("event_id")
+  REFERENCES "events" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_budgets_on_event_id" ON "budgets" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "budgets" ("id","amount","description","event_id","created_at","updated_at")
+                     SELECT "id","amount","description","event_id","created_at","updated_at" FROM "abudgets"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "abudgets"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TEMPORARY TABLE "agift_registries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "item_name" varchar, "price" decimal, "link" varchar, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_agift_registries_on_event_id" ON "agift_registries" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "agift_registries" ("id","item_name","price","link","event_id","created_at","updated_at")
+                     SELECT "id","item_name","price","link","event_id","created_at","updated_at" FROM "gift_registries"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "gift_registries"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "gift_registries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "item_name" varchar, "price" decimal, "link" varchar, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_307e014658"
+FOREIGN KEY ("event_id")
+  REFERENCES "events" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_gift_registries_on_event_id" ON "gift_registries" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "gift_registries" ("id","item_name","price","link","event_id","created_at","updated_at")
+                     SELECT "id","item_name","price","link","event_id","created_at","updated_at" FROM "agift_registries"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "agift_registries"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aguests" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "rsvp_status" varchar, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_aguests_on_event_id" ON "aguests" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "aguests" ("id","name","rsvp_status","event_id","created_at","updated_at")
+                     SELECT "id","name","rsvp_status","event_id","created_at","updated_at" FROM "guests"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "guests"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "guests" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "rsvp_status" varchar, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_64ecc46b69"
+FOREIGN KEY ("event_id")
+  REFERENCES "events" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_guests_on_event_id" ON "guests" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "guests" ("id","name","rsvp_status","event_id","created_at","updated_at")
+                     SELECT "id","name","rsvp_status","event_id","created_at","updated_at" FROM "aguests"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "aguests"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aitineraries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "time" datetime(6), "description" text, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_aitineraries_on_event_id" ON "aitineraries" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "aitineraries" ("id","time","description","event_id","created_at","updated_at")
+                     SELECT "id","time","description","event_id","created_at","updated_at" FROM "itineraries"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "itineraries"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "itineraries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "time" datetime(6), "description" text, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_7dda9619a9"
+FOREIGN KEY ("event_id")
+  REFERENCES "events" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_itineraries_on_event_id" ON "itineraries" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "itineraries" ("id","time","description","event_id","created_at","updated_at")
+                     SELECT "id","time","description","event_id","created_at","updated_at" FROM "aitineraries"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "aitineraries"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TEMPORARY TABLE "anotifications" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "message" text, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_anotifications_on_event_id" ON "anotifications" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "anotifications" ("id","message","event_id","created_at","updated_at")
+                     SELECT "id","message","event_id","created_at","updated_at" FROM "notifications"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "notifications"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "notifications" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "message" text, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_78f4b5a537"
+FOREIGN KEY ("event_id")
+  REFERENCES "events" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_notifications_on_event_id" ON "notifications" ("event_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "notifications" ("id","message","event_id","created_at","updated_at")
+                     SELECT "id","message","event_id","created_at","updated_at" FROM "anotifications"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "anotifications"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20241102034155)[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20241031162326),
+(20241031162319),
+(20241031162308),
+(20241031162302),
+(20241031162254),
+(20241031162218);[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.0ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'test', '2024-11-02 03:45:44.616885', '2024-11-02 03:45:44.616886') RETURNING "key"[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.0ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', 'dae130613eff362966a7eae26ee65e4b627c7903', '2024-11-02 03:45:44.618490', '2024-11-02 03:45:44.618491') RETURNING "key"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.9ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.3ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mFixtures Load (0.4ms)[0m  [1m[31mDELETE FROM "budgets";
+DELETE FROM "events";
+DELETE FROM "gift_registries";
+DELETE FROM "guests";
+DELETE FROM "itineraries";
+DELETE FROM "notifications";
+INSERT INTO "budgets" ("id", "amount", "description", "event_id", "created_at", "updated_at") VALUES (980190962, 9.99, 'MyText', 980190962, '2024-11-02 03:45:44.726584', '2024-11-02 03:45:44.726584');
+INSERT INTO "budgets" ("id", "amount", "description", "event_id", "created_at", "updated_at") VALUES (298486374, 9.99, 'MyText', 298486374, '2024-11-02 03:45:44.726584', '2024-11-02 03:45:44.726584');
+INSERT INTO "events" ("id", "date", "location", "created_at", "updated_at", "name") VALUES (980190962, '2024-12-01 00:00:00', 'New York', '2024-10-23 03:45:44', '2024-10-23 03:45:44', 'Sample Event One');
+INSERT INTO "events" ("id", "date", "location", "created_at", "updated_at", "name") VALUES (298486374, '2024-12-15 00:00:00', 'Los Angeles', '2024-10-28 03:45:44', '2024-10-28 03:45:44', 'Sample Event Two');
+INSERT INTO "gift_registries" ("id", "item_name", "price", "link", "event_id", "created_at", "updated_at") VALUES (980190962, 'MyString', 9.99, 'MyString', 980190962, '2024-11-02 03:45:44.734861', '2024-11-02 03:45:44.734861');
+INSERT INTO "gift_registries" ("id", "item_name", "price", "link", "event_id", "created_at", "updated_at") VALUES (298486374, 'MyString', 9.99, 'MyString', 298486374, '2024-11-02 03:45:44.734861', '2024-11-02 03:45:44.734861');
+INSERT INTO "guests" ("id", "name", "rsvp_status", "event_id", "created_at", "updated_at") VALUES (408913340, 'John Doe', 'Accepted', 980190962, '2024-11-02 03:45:44.738660', '2024-11-02 03:45:44.738660');
+INSERT INTO "guests" ("id", "name", "rsvp_status", "event_id", "created_at", "updated_at") VALUES (929174073, 'Jane Smith', 'Declined', 298486374, '2024-11-02 03:45:44.738660', '2024-11-02 03:45:44.738660');
+INSERT INTO "guests" ("id", "name", "rsvp_status", "event_id", "created_at", "updated_at") VALUES (833673796, 'Michael Brown', 'Pending', 980190962, '2024-11-02 03:45:44.738660', '2024-11-02 03:45:44.738660');
+INSERT INTO "guests" ("id", "name", "rsvp_status", "event_id", "created_at", "updated_at") VALUES (425497406, 'Emily White', 'Accepted', 298486374, '2024-11-02 03:45:44.738660', '2024-11-02 03:45:44.738660');
+INSERT INTO "guests" ("id", "name", "rsvp_status", "event_id", "created_at", "updated_at") VALUES (1050947281, 'Alex Jones', 'Accepted', 980190962, '2024-11-02 03:45:44.738660', '2024-11-02 03:45:44.738660');
+INSERT INTO "guests" ("id", "name", "rsvp_status", "event_id", "created_at", "updated_at") VALUES (549722175, 'Lisa Wang', 'Declined', 298486374, '2024-11-02 03:45:44.738660', '2024-11-02 03:45:44.738660');
+INSERT INTO "itineraries" ("id", "time", "description", "event_id", "created_at", "updated_at") VALUES (980190962, '2024-10-31 12:23:08', 'MyText', 980190962, '2024-11-02 03:45:44.740310', '2024-11-02 03:45:44.740310');
+INSERT INTO "itineraries" ("id", "time", "description", "event_id", "created_at", "updated_at") VALUES (298486374, '2024-10-31 12:23:08', 'MyText', 298486374, '2024-11-02 03:45:44.740310', '2024-11-02 03:45:44.740310');
+INSERT INTO "notifications" ("id", "message", "event_id", "created_at", "updated_at") VALUES (980190962, 'MyText', 980190962, '2024-11-02 03:45:44.745932', '2024-11-02 03:45:44.745932');
+INSERT INTO "notifications" ("id", "message", "event_id", "created_at", "updated_at") VALUES (298486374, 'MyText', 298486374, '2024-11-02 03:45:44.745932', '2024-11-02 03:45:44.745932')[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_key_check[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------
+EventsControllerTest: test_should_destroy_event
+-----------------------------------------------
+  [1m[36mEvent Load (0.1ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------
+EventsControllerTest: test_should_get_new
+-----------------------------------------
+  [1m[36mEvent Load (0.0ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------
+EventsControllerTest: test_should_update_event
+----------------------------------------------
+  [1m[36mEvent Load (0.0ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------
+EventsControllerTest: test_should_create_event
+----------------------------------------------
+  [1m[36mEvent Load (0.0ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------
+EventsControllerTest: test_should_get_edit
+------------------------------------------
+  [1m[36mEvent Load (0.0ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------
+EventsControllerTest: test_should_get_index
+-------------------------------------------
+  [1m[36mEvent Load (0.0ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------------
+EventsControllerTest: test_should_show_event
+--------------------------------------------
+  [1m[36mEvent Load (0.0ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.8ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.3ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mFixtures Load (1.2ms)[0m  [1m[31mDELETE FROM "budgets";
+DELETE FROM "events";
+DELETE FROM "gift_registries";
+DELETE FROM "guests";
+DELETE FROM "itineraries";
+DELETE FROM "notifications";
+INSERT INTO "budgets" ("id", "amount", "description", "event_id", "created_at", "updated_at") VALUES (980190962, 9.99, 'MyText', 980190962, '2024-11-02 03:46:38.232680', '2024-11-02 03:46:38.232680');
+INSERT INTO "budgets" ("id", "amount", "description", "event_id", "created_at", "updated_at") VALUES (298486374, 9.99, 'MyText', 298486374, '2024-11-02 03:46:38.232680', '2024-11-02 03:46:38.232680');
+INSERT INTO "events" ("id", "date", "location", "created_at", "updated_at", "name") VALUES (980190962, '2024-12-01 00:00:00', 'New York', '2024-10-23 03:46:38', '2024-10-23 03:46:38', 'Sample Event One');
+INSERT INTO "events" ("id", "date", "location", "created_at", "updated_at", "name") VALUES (298486374, '2024-12-15 00:00:00', 'Los Angeles', '2024-10-28 03:46:38', '2024-10-28 03:46:38', 'Sample Event Two');
+INSERT INTO "gift_registries" ("id", "item_name", "price", "link", "event_id", "created_at", "updated_at") VALUES (980190962, 'MyString', 9.99, 'MyString', 980190962, '2024-11-02 03:46:38.240231', '2024-11-02 03:46:38.240231');
+INSERT INTO "gift_registries" ("id", "item_name", "price", "link", "event_id", "created_at", "updated_at") VALUES (298486374, 'MyString', 9.99, 'MyString', 298486374, '2024-11-02 03:46:38.240231', '2024-11-02 03:46:38.240231');
+INSERT INTO "guests" ("id", "name", "rsvp_status", "event_id", "created_at", "updated_at") VALUES (408913340, 'John Doe', 'Accepted', 980190962, '2024-11-02 03:46:38.244458', '2024-11-02 03:46:38.244458');
+INSERT INTO "guests" ("id", "name", "rsvp_status", "event_id", "created_at", "updated_at") VALUES (929174073, 'Jane Smith', 'Declined', 298486374, '2024-11-02 03:46:38.244458', '2024-11-02 03:46:38.244458');
+INSERT INTO "guests" ("id", "name", "rsvp_status", "event_id", "created_at", "updated_at") VALUES (833673796, 'Michael Brown', 'Pending', 980190962, '2024-11-02 03:46:38.244458', '2024-11-02 03:46:38.244458');
+INSERT INTO "guests" ("id", "name", "rsvp_status", "event_id", "created_at", "updated_at") VALUES (425497406, 'Emily White', 'Accepted', 298486374, '2024-11-02 03:46:38.244458', '2024-11-02 03:46:38.244458');
+INSERT INTO "guests" ("id", "name", "rsvp_status", "event_id", "created_at", "updated_at") VALUES (1050947281, 'Alex Jones', 'Accepted', 980190962, '2024-11-02 03:46:38.244458', '2024-11-02 03:46:38.244458');
+INSERT INTO "guests" ("id", "name", "rsvp_status", "event_id", "created_at", "updated_at") VALUES (549722175, 'Lisa Wang', 'Declined', 298486374, '2024-11-02 03:46:38.244458', '2024-11-02 03:46:38.244458');
+INSERT INTO "itineraries" ("id", "time", "description", "event_id", "created_at", "updated_at") VALUES (980190962, '2024-10-31 12:23:08', 'MyText', 980190962, '2024-11-02 03:46:38.246092', '2024-11-02 03:46:38.246092');
+INSERT INTO "itineraries" ("id", "time", "description", "event_id", "created_at", "updated_at") VALUES (298486374, '2024-10-31 12:23:08', 'MyText', 298486374, '2024-11-02 03:46:38.246092', '2024-11-02 03:46:38.246092');
+INSERT INTO "notifications" ("id", "message", "event_id", "created_at", "updated_at") VALUES (980190962, 'MyText', 980190962, '2024-11-02 03:46:38.251538', '2024-11-02 03:46:38.251538');
+INSERT INTO "notifications" ("id", "message", "event_id", "created_at", "updated_at") VALUES (298486374, 'MyText', 298486374, '2024-11-02 03:46:38.251538', '2024-11-02 03:46:38.251538')[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_key_check[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------
+EventsControllerTest: test_should_get_index
+-------------------------------------------
+  [1m[36mEvent Load (0.1ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------
+EventsControllerTest: test_should_destroy_event
+-----------------------------------------------
+  [1m[36mEvent Load (0.0ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------
+EventsControllerTest: test_should_update_event
+----------------------------------------------
+  [1m[36mEvent Load (0.0ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------
+EventsControllerTest: test_should_create_event
+----------------------------------------------
+  [1m[36mEvent Load (0.0ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------
+EventsControllerTest: test_should_get_new
+-----------------------------------------
+  [1m[36mEvent Load (0.0ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------
+EventsControllerTest: test_should_get_edit
+------------------------------------------
+  [1m[36mEvent Load (0.0ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------------
+EventsControllerTest: test_should_show_event
+--------------------------------------------
+  [1m[36mEvent Load (0.0ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (2.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.3ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mFixtures Load (1.7ms)[0m  [1m[31mDELETE FROM "budgets";
+DELETE FROM "events";
+DELETE FROM "gift_registries";
+DELETE FROM "guests";
+DELETE FROM "itineraries";
+DELETE FROM "notifications";
+INSERT INTO "budgets" ("id", "amount", "description", "event_id", "created_at", "updated_at") VALUES (980190962, 9.99, 'MyText', 980190962, '2024-11-02 03:47:17.450411', '2024-11-02 03:47:17.450411');
+INSERT INTO "budgets" ("id", "amount", "description", "event_id", "created_at", "updated_at") VALUES (298486374, 9.99, 'MyText', 298486374, '2024-11-02 03:47:17.450411', '2024-11-02 03:47:17.450411');
+INSERT INTO "events" ("id", "date", "location", "created_at", "updated_at", "name") VALUES (980190962, '2024-12-01 00:00:00', 'New York', '2024-10-23 03:47:17', '2024-10-23 03:47:17', 'Sample Event One');
+INSERT INTO "events" ("id", "date", "location", "created_at", "updated_at", "name") VALUES (298486374, '2024-12-15 00:00:00', 'Los Angeles', '2024-10-28 03:47:17', '2024-10-28 03:47:17', 'Sample Event Two');
+INSERT INTO "gift_registries" ("id", "item_name", "price", "link", "event_id", "created_at", "updated_at") VALUES (980190962, 'MyString', 9.99, 'MyString', 980190962, '2024-11-02 03:47:17.458868', '2024-11-02 03:47:17.458868');
+INSERT INTO "gift_registries" ("id", "item_name", "price", "link", "event_id", "created_at", "updated_at") VALUES (298486374, 'MyString', 9.99, 'MyString', 298486374, '2024-11-02 03:47:17.458868', '2024-11-02 03:47:17.458868');
+INSERT INTO "guests" ("id", "name", "rsvp_status", "event_id", "created_at", "updated_at") VALUES (408913340, 'John Doe', 'Accepted', 980190962, '2024-11-02 03:47:17.463884', '2024-11-02 03:47:17.463884');
+INSERT INTO "guests" ("id", "name", "rsvp_status", "event_id", "created_at", "updated_at") VALUES (929174073, 'Jane Smith', 'Declined', 298486374, '2024-11-02 03:47:17.463884', '2024-11-02 03:47:17.463884');
+INSERT INTO "guests" ("id", "name", "rsvp_status", "event_id", "created_at", "updated_at") VALUES (833673796, 'Michael Brown', 'Pending', 980190962, '2024-11-02 03:47:17.463884', '2024-11-02 03:47:17.463884');
+INSERT INTO "guests" ("id", "name", "rsvp_status", "event_id", "created_at", "updated_at") VALUES (425497406, 'Emily White', 'Accepted', 298486374, '2024-11-02 03:47:17.463884', '2024-11-02 03:47:17.463884');
+INSERT INTO "guests" ("id", "name", "rsvp_status", "event_id", "created_at", "updated_at") VALUES (1050947281, 'Alex Jones', 'Accepted', 980190962, '2024-11-02 03:47:17.463884', '2024-11-02 03:47:17.463884');
+INSERT INTO "guests" ("id", "name", "rsvp_status", "event_id", "created_at", "updated_at") VALUES (549722175, 'Lisa Wang', 'Declined', 298486374, '2024-11-02 03:47:17.463884', '2024-11-02 03:47:17.463884');
+INSERT INTO "itineraries" ("id", "time", "description", "event_id", "created_at", "updated_at") VALUES (980190962, '2024-10-31 12:23:08', 'MyText', 980190962, '2024-11-02 03:47:17.465734', '2024-11-02 03:47:17.465734');
+INSERT INTO "itineraries" ("id", "time", "description", "event_id", "created_at", "updated_at") VALUES (298486374, '2024-10-31 12:23:08', 'MyText', 298486374, '2024-11-02 03:47:17.465734', '2024-11-02 03:47:17.465734');
+INSERT INTO "notifications" ("id", "message", "event_id", "created_at", "updated_at") VALUES (980190962, 'MyText', 980190962, '2024-11-02 03:47:17.471813', '2024-11-02 03:47:17.471813');
+INSERT INTO "notifications" ("id", "message", "event_id", "created_at", "updated_at") VALUES (298486374, 'MyText', 298486374, '2024-11-02 03:47:17.471813', '2024-11-02 03:47:17.471813')[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_key_check[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------
+EventsControllerTest: test_should_get_index
+-------------------------------------------
+  [1m[36mEvent Load (0.1ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------------
+EventsControllerTest: test_should_show_event
+--------------------------------------------
+  [1m[36mEvent Load (0.0ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------
+EventsControllerTest: test_should_destroy_event
+-----------------------------------------------
+  [1m[36mEvent Load (0.0ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------
+EventsControllerTest: test_should_get_edit
+------------------------------------------
+  [1m[36mEvent Load (0.0ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------
+EventsControllerTest: test_should_update_event
+----------------------------------------------
+  [1m[36mEvent Load (0.0ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------
+EventsControllerTest: test_should_get_new
+-----------------------------------------
+  [1m[36mEvent Load (0.0ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------
+EventsControllerTest: test_should_create_event
+----------------------------------------------
+  [1m[36mEvent Load (0.0ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
